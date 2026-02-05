@@ -16,8 +16,15 @@ class App < Sinatra::Base
     end
 
     # Routen /
-    get '/' do
-        erb :index
+    get '/clothing' do 
+        @clothing = db.execute('SELECT * FROM clothing ORDER BY name')
+      p @clothing
+      erb(:"index")
+    end
+
+    post '/clothing/:id/delete' do | id |
+        db.execute('DELETE FROM clothing WHERE id= ' +id)
+      redirect ('/clothing')
     end
 
 end
