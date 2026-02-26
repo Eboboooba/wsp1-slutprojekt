@@ -1,5 +1,8 @@
 require 'debug'
 require "awesome_print"
+require 'sinatra'
+require 'sinatra/base'
+require 'sqlite3'
 
 class App < Sinatra::Base
 
@@ -16,6 +19,10 @@ class App < Sinatra::Base
     end
 
     # Routen /
+
+    get '/' do
+    "Hello World"
+  end
     get '/clothing' do 
         @clothing = db.execute('SELECT * FROM clothing ORDER BY name')
       p @clothing
@@ -23,7 +30,7 @@ class App < Sinatra::Base
     end
 
     post '/clothing/:id/delete' do | id |
-        db.execute('DELETE FROM clothing WHERE id= ' +id)
+        db.execute('DELETE FROM clothing WHERE id= ?' +id)
       redirect ('/clothing')
     end
 

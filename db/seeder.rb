@@ -19,7 +19,8 @@ class Seeder
                 category TEXT,
                 description TEXT,
                 condition TEXT,
-                brand TEXT)')
+                brand TEXT,
+                price TEXT)')
   end
 
 
