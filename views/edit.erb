@@ -1,0 +1,11 @@
+<h2>Uppdatera atikel</h2>
+
+<form action="/clothing/<%=@cloth["id"]%>/update" method = "POST">
+
+<label>Name<input type="text" name="cloth_name" value ="<%=@cloth["name"]%>"></label>
+
+<label>Beskrivning <input type="text" name="cloth_description" value ="<%=@cloth["description"]%>"></label>
+
+<input type="submit" value="Uppdatera">
+
+</form>

@@ -25,13 +25,13 @@ class Seeder
 
 
   def self.populate_tables
-    db.execute('INSERT INTO clothing (name, category, description, condition, brand, price) VALUES ("annas tröja", "T-shirt", "En röd t shirt md en blomma på", "gott skick", "HM", "70kr")')
+    db.execute('INSERT INTO clothing (name, category, description, condition, brand, price) VALUES ("annas tröja", "T-shirt", "En röd t shirt med en blomma på", "gott skick", "HM", "70kr")')
    
   end
   private
   def self.db
     return @db if @db
-    @db = SQLite3::Database.new('db/clothing.sqlite')
+    @db = SQLite3::Database.new(DB_PATH)
     @db.results_as_hash = true
     @db
   end
