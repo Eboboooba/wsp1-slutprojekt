@@ -1,35 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt #2</title>
-    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secondhandsidan</title>
+  <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Secondhandsidan</h1>
-<hr>
-  <h2> Kläder i butiken </h2>
-<hr>
 
-<ul>
-  <% @clothing.each do |cloth| %>
-    <li>
-      <a href="/clothing/<%= cloth["id"]%>">
-			  <%= cloth["name"] %>
-		  </a>
- <form class="delete" action="/clothing/<%=cloth["id"]%>/delete" method="post">
-    <input type="submit" value="Ta bort">
-   
-  <a class="edit" href="/clothing/<%=cloth["id"]%>/edit">Ändra</a>
-  </form>
-    </li>
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <h1>Secondhand<span>sidan</span></h1>
+      </div>
+      <p class="tagline">Unika plagg — ny chans</p>
+    </div>
+  </header>
 
+  <main>
+    <section class="shop-section">
+      <div class="section-header">
+        <h2>Kläder i butiken</h2>
+        <span class="item-count"><%= @clothing.length %> plagg</span>
+      </div>
 
+      <div class="grid">
+        <% @clothing.each do |cloth| %>
+          <div class="card">
+            <div class="card-image">
+              <div class="placeholder-img">
+                <span>👗</span>
+              </div>
+              <% if cloth["category"] %>
+                <span class="badge"><%= cloth["category"] %></span>
+              <% end %>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">
+                <a href="/clothing/<%= cloth["id"] %>"><%= cloth["name"] %></a>
+              </h3>
+              <% if cloth["brand"] %>
+                <p class="card-brand"><%= cloth["brand"] %></p>
+              <% end %>
+              <% if cloth["description"] %>
+                <p class="card-desc"><%= cloth["description"] %></p>
+              <% end %>
+              <div class="card-footer">
+                <% if cloth["price"] %>
+                  <span class="price"><%= cloth["price"] %></span>
+                <% end %>
+                <div class="card-actions">
+                  <a class="btn btn-edit" href="/clothing/<%= cloth["id"] %>/edit">Ändra</a>
+                  <form class="delete-form" action="/clothing/<%= cloth["id"] %>/delete" method="post">
+                    <input type="submit" class="btn btn-delete" value="Ta bort">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
 
-  <% end %>
-</ul>
-   <h2>Sälj ett plagg!</h2>
+    <section class="sell-section">
+      <div class="sell-inner">
+        <div class="sell-header">
+          <span class="sell-icon">＋</span>
+          <h2>Sälj ett plagg</h2>
+          <p>Ge dina kläder ett nytt hem</p>
+        </div>
+        <form action="/new" method="post" class="sell-form">
+          <div class="form-row">
+            <label>
+              <span>Plaggets namn</span>
+              <input type="text" name="coth_name" placeholder="t.ex. Blå jeansjacka">
+            </label>
+            <label>
+              <span>Beskrivning</span>
+              <input type="text" name="coth_description" placeholder="Skick, storlek, färg...">
+            </label>
+          </div>
+          <button type="submit" class="btn btn-sell">Lägg ut plagg ✦</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>✦ Secondhandsidan — mode med historia</p>
+  </footer>
 
 </body>
 </html>

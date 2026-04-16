@@ -54,4 +54,13 @@ class App < Sinatra::Base
 
     redirect("/clothing")
   end
+    post '/new' do  
+      p params
+    coth_name = params["coth_name"]
+    coth_description = params["coth_description"]
+
+     db.execute("INSERT INTO clothing (name, description) 
+				 		 VALUES(?,?)", [coth_name, coth_description])
+      redirect("/clothing")
+  end
 end

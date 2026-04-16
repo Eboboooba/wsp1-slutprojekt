@@ -1,11 +1,56 @@
-<h2>Uppdatera atikel</h2>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ändra plagg — Secondhandsidan</title>
+  <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
 
-<form action="/clothing/<%=@cloth["id"]%>/update" method = "POST">
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <a href="/clothing" class="logo-link">
+          <span class="logo-icon">✦</span>
+          <h1>Secondhand<span>sidan</span></h1>
+        </a>
+      </div>
+      <p class="tagline">Unika plagg — ny chans</p>
+    </div>
+  </header>
 
-<label>Name<input type="text" name="cloth_name" value ="<%=@cloth["name"]%>"></label>
+  <main>
+    <section class="edit-section">
+      <div class="edit-inner">
+        <a href="/clothing" class="back-link">← Tillbaka till butiken</a>
+        <div class="edit-header">
+          <span class="sell-icon">✎</span>
+          <h2>Uppdatera plagg</h2>
+          <p>Ändra information om <strong><%= @cloth["name"] %></strong></p>
+        </div>
 
-<label>Beskrivning <input type="text" name="cloth_description" value ="<%=@cloth["description"]%>"></label>
+        <form action="/clothing/<%= @cloth["id"] %>/update" method="POST" class="sell-form">
+          <div class="form-row">
+            <label>
+              <span>Plaggets namn</span>
+              <input type="text" name="cloth_name" value="<%= @cloth["name"] %>">
+            </label>
+            <label>
+              <span>Beskrivning</span>
+              <input type="text" name="cloth_description" value="<%= @cloth["description"] %>">
+            </label>
+          </div>
+          <button type="submit" class="btn btn-sell">Spara ändringar ✦</button>
+        </form>
+      </div>
+    </section>
+  </main>
 
-<input type="submit" value="Uppdatera">
+  <footer>
+    <p>✦ Secondhandsidan — mode med historia</p>
+  </footer>
 
-</form>
+</body>
+</html>
