@@ -63,4 +63,6 @@ class App < Sinatra::Base
 				 		 VALUES(?,?)", [coth_name, coth_description])
       redirect("/clothing")
   end
+
+  post '/login'
 end
