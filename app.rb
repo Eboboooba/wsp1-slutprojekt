@@ -3,6 +3,8 @@ require "awesome_print"
 require 'sinatra'
 require 'sinatra/base'
 require 'sqlite3'
+require 'securerandom'
+require 'bcrypt'
 
 class App < Sinatra::Base
 
@@ -18,17 +20,15 @@ class App < Sinatra::Base
       return @db
   end
 
-  # Routen /
+  configure do
+    enable :sessions
+    set :sessions_secret, SecureRandom.hex(64)
+  end
+
 
   get '/' do
-    "Hello World"
-  end
-
-  get '/clothing' do 
-        @clothing = db.execute('SELECT * FROM clothing ORDER BY name')
-      p @clothing
-      erb(:"index")
-  end
+   redirect '/login'
+ end
 
   post '/clothing/:id/delete' do | id |
         db.execute('DELETE FROM clothing WHERE id= ' +id)
@@ -64,5 +64,24 @@ class App < Sinatra::Base
       redirect("/clothing")
   end
 
-  post '/login'
+  get '/login' do
+    erb :login
+  end
+
+  post '/login' do
+    puts params.inspect
+    if params["username"] == "admin" && params["password"] == "123"
+      session[:logged_in] = true
+      redirect '/clothing'
+  else
+    redirect '/login'
+  end
+  end
+
+get '/clothing' do
+  redirect '/login' unless session[:logged_in]
+  @clothing = db.execute('SELECT * FROM clothing ORDER BY name')
+  erb :"index"
+end
+
 end
